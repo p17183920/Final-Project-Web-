@@ -1,0 +1,12 @@
+<h1>Results Page</h1>
+
+
+<% parsedData["Search"].forEach(function(movie) { %>
+    <li><%= movie["Title"] %></li>
+<% }) %>
+
+<br>
+<br>
+<form action="/" method="GET">
+<button type="submit">Return to Search Page</button>
+</form> 

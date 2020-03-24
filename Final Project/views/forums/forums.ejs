@@ -1,0 +1,43 @@
+<%- include("../partials/header") %>
+
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome To Forums!</h1>
+            <p>View and discuss a wide variety of topics</p>
+            <p>
+                <a class="btn btn-success btn-lg" href="/forums/new">Create a new forum</a>
+            </p>
+        </div>
+    </header>
+
+
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+
+        <% forums.forEach(function(forum){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%= forum.image %>">
+                <div class="caption">
+                    <h4> <%= forum.name %> </h4>
+                </div>
+                <p>
+                    <a href="/forums/<%= forum._id %>" class = "btn btn-primary">More Info</a>   <!-- the forum_id generates random number id -->
+                </p>
+            </div>
+        </div>
+
+        <% }); %>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<%- include("../partials/footer") %>

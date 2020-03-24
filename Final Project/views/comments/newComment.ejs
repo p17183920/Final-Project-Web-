@@ -1,0 +1,37 @@
+<%- include("../partials/header") %>
+
+
+<h1 style="text-align: center;">Add A New Comment to <%= forum.name %> </h1>
+
+<div class="container">
+    <div class="row">
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/forums/<%= forum._id %>/comments" method="POST">       <!--pass in the correct forum id, and to the create route -->
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Text" name="comment[text]">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Author" name="comment[author]">  <!-- doing comment[] replaces doing var text = req.body.text in the create route and puts it all into one -->
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                </div>
+            </form>
+            <a href="/forums">Go Back To Forums</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include("../partials/footer") %>

@@ -1,0 +1,64 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-3">
+         <p class="lead">Forums</p>
+         <div class=list-group>
+            <li class="list-group-item">Info 1</li>
+            <li class="list-group-item">Info 2</li>
+            <li class="list-group-item">Info 3</li>
+         </div>
+      </div>
+      <div class="col-md-9">
+         <div class="thumbnailtitle">
+            <img class="img-responsive" src="<%= forum.image %>">
+            <div class="caption-full">
+               <h4 class="float-right">
+                  Random Text
+               </h4>
+               <h4><a><%= forum.name %></a></h4>
+               <p><%= forum.description %></p>
+            </div>
+         </div>
+         <div class="well">
+            <div class="text-right">
+               <a class="btn btn-success" href="/forums/<%= forum._id %>/comments/new">Add A New Comment</a>
+            </div>
+            <hr>
+            <% forum.comments.forEach(function(comment){  %>
+               <div class="row">
+                  <div class="col-md-12">
+                    <strong><%= comment.author %></strong>
+                     <span class="float-right"> 10 days ago</span>
+                     <p>
+                        <%= comment.text %>
+                     </p>
+                  </div>
+               </div>
+               <hr>
+            <% }) %>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="d-flex justify-content-center">
+<a class="btn btn-primary" href="/forums">Go back to Forums</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include("../partials/footer") %>
