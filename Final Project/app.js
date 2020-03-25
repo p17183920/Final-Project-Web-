@@ -34,6 +34,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next){ //middleware to pass req.user to every template
+res.locals.currentUser = req.user;
+next();  //need the next otherwise everything will stop, need next to say "carry on with the rest"
+});
+
+
 
 
 //LANDING PAGE
@@ -54,7 +60,7 @@ app.get("/forums", function (req, res) {
             console.log("error finding forum data from database");
         }
         else {
-            res.render("forums/forums.ejs", { forums: forums });
+            res.render("forums/forums.ejs", { forums: forums});
         }
     })
 })

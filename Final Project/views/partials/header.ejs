@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<head>
-    <title>Student.io</title>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/main.css">
-</head>
-<body>
-    
-     
-    <nav class="site-header sticky-top py-1">
-        <div class="container d-flex flex-column flex-md-row justify-content-between">
-          <a class="py-2" href="/" aria-label="Product">
-            Student.io
-          </a>
-          <a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
-          <a class="py-2 d-none d-md-inline-block" href="/register">Sign Up</a>
-          <a class="py-2 d-none d-md-inline-block" href="/logout">Logout</a>
-        </div>
-      </nav>
 
+<head>
+  <title>Student.io</title>
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheets/main.css">
+</head>
+
+<body>
+
+
+  <nav class="site-header sticky-top py-1">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2" href="/" aria-label="Product">
+        Student.io
+      </a>
+      <% if(!currentUser){ %>
+      <a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
+      <a class="py-2 d-none d-md-inline-block" href="/register">Sign Up</a>
+     <% } else{ %>
+      <a class="py-2 d-none d-md-inline-block" href="#">Signed In As <%= currentUser.username %></a>
+      <a class="py-2 d-none d-md-inline-block" href="#">Profile</a>
+      <a class="py-2 d-none d-md-inline-block" href="/logout">Logout</a>
+     <% } %>
+    </div>
+  </nav>
