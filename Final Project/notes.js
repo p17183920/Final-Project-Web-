@@ -50,7 +50,13 @@
 
 //TO DO LIST:
 //live chat/chat rooms
-//using apis
 //to do list tool
 //weather app
-//user authentication WITH encryption
+//user authentication WITH encryption-- done
+//flash messages, UI improvements
+//profile
+//update and destroy within forums
+
+//report draft 3rd april
+//month left to complete tools
+//next meeting 8th april
