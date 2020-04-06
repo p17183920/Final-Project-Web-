@@ -10,6 +10,7 @@ var Forum = require("./models/forum");
 var Comment = require("./models/comment");
 var seedDB = require("./seeds");
 
+//requiring routes
 var commentRoutes = require("./routes/comments");
 var forumRoutes = require("./routes/forums");
 var authRoutes = require("./routes/auth");
@@ -21,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
 
-seedDB();  //this will remove forums and comments, uncomment this to keep comments/forums in database
+//seedDB();  //this will remove forums and comments, uncomment this to keep comments/forums in database
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({

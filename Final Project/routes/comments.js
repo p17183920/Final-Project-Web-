@@ -39,6 +39,11 @@ router.post("/",isLoggedIn, function (req, res) {
                     console.log(err);
                 }
                 else {
+                    // add username and id to comment
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    //save comment
+                    comment.save();
                     //connect new comment to forum
                     forum.comments.push(comment);
                     forum.save();
