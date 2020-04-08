@@ -29,11 +29,17 @@ router.post("/",isLoggedIn, function (req, res) {
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;  //gotten from name variable in new forums
-    var newForum = { name: name, image: image, description: desc };
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newForum = { name: name, image: image, description: desc, author: author };
     //create new campground and save to database
     Forum.create(newForum, function (err, newlyCreatedForum) {
         if (err) { console.log("error creating new forum"); }
-        else { res.redirect("/forums"); }
+        else { 
+            res.redirect("/forums");
+         }
     });
 });
 

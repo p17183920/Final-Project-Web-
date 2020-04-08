@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var fs= require("fs");
 var User = require("./models/user");
 
 var Forum = require("./models/forum");
@@ -44,12 +45,27 @@ next();  //need the next otherwise everything will stop, need next to say "carry
 
 
 
-
-
-
 app.use(authRoutes);
 app.use("/forums" ,forumRoutes);
 app.use("/forums/:id/comments", commentRoutes);
+
+/*
+//live chat routes
+app.get("/livechat", function (req, res) {
+    res.render("livechat.ejs");
+});
+*/
+
+//TRY USING REGULAR HTML FILE INSTEAD OF EJS ASWELL
+//USE HTML
+//TRY PUTTING THEM IN SAME ROUTE DIRECTORY
+
+var socket = require("socket.io");
+
+//testing new method for live chat route
+app.get("/livechat", function (req, res) {
+    res.render("livechat.ejs");
+});
 
 
 
