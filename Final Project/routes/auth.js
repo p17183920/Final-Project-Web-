@@ -4,17 +4,6 @@ var passport = require("passport");
 var User = require("../models/user");
 
 
-//root route // LANDING PAGE
-router.get("/", function (req, res) {
-    res.render("landing.ejs");
-})
-
-//profile page route
-//need to get userID specific routes probably id/profile
-router.get("/profile", function (req, res) {
-    res.render("landing.ejs");
-})
-
 
 
 
