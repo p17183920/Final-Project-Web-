@@ -75,6 +75,7 @@ app.get("/profile", function (req, res) {
 app.use(authRoutes);   //auth routes in seperate file
 app.use("/forums" ,forumRoutes);     //forum routes in seperate file
 app.use("/forums/:id/comments", commentRoutes);   //comment routes in seperate file
+//app.use(livechatRoutes);
 
 //live chat routes
 app.get("/livechat", function (req, res) {
@@ -82,7 +83,17 @@ app.get("/livechat", function (req, res) {
    res.render("livechat.ejs");
 });
 
-//app.use(livechatRoutes);
+app.get("/calculator", function (req, res) {
+ 
+  res.render("calculator.ejs");
+});
+
+app.get("/todo", function (req, res) {
+ 
+  res.render("todolist.ejs");
+});
+
+
 
 // Live chat stuff
 
