@@ -59,11 +59,17 @@ next();  //need the next otherwise everything will stop, need next to say "carry
 });
 
 
+app.get("/home", function (req, res) {
+  // console.log("landing page triggered");
+   res.render("landing.ejs");
+})
+
 //root route // LANDING PAGE
 app.get("/", function (req, res) {
    // console.log("landing page triggered");
-    res.render("landing.ejs");
+    res.redirect("/home");
 })
+
 
 //profile page route
 //need to get userID specific routes probably id/profile
@@ -77,11 +83,13 @@ app.use("/forums" ,forumRoutes);     //forum routes in seperate file
 app.use("/forums/:id/comments", commentRoutes);   //comment routes in seperate file
 //app.use(livechatRoutes);
 
+
 //live chat routes
 app.get("/livechat", function (req, res) {
-   // res.sendFile(__dirname + "/public/index.html");
-   res.render("livechat.ejs");
+  res.render("livechat.ejs");
 });
+
+
 
 app.get("/calculator", function (req, res) {
  
