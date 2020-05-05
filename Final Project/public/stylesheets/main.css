@@ -89,3 +89,7 @@ body {
   
   .overflow-hidden { overflow: hidden; }
   
+
+  #delete-form {
+    display: inline;
+  }

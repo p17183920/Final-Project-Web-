@@ -8,18 +8,30 @@ var data = [
 {
     name: "Gaming",
     image: "https://mk0vojovoweumgjb625j.kinstacdn.com/wp-content/uploads/2019/06/25.6.19_header.jpg",
-    description: "this forum is all about gaming!"
+    description: "this forum is all about gaming!",
+    author:{
+        id:"588c2e092403d111454fff71",
+        username:"Jack"
+    }
 },
 
 {
     name: "Maths",
     image: "https://scx1.b-cdn.net/csz/news/800/2015/anewwayoftea.jpg",
-    description: "this forum is all about maths!"
+    description: "this forum is all about maths!",
+    author:{
+        id:"588c2e092403d111454fff76",
+        username:"Jane"
+    }
 },
 {
     name: "Science",
     image: "https://www.st-johns-coppull.lancs.sch.uk/images/news/science.png",
-    description: "this forum is all about science!"
+    description: "this forum is all about science!",
+    author:{
+        id:"588c2e092403d111454fff77",
+        username:"Jill"
+    }
 }
 ]
 
@@ -29,14 +41,14 @@ var data = [
 
 function seedDB(){
     //Remove all forums from collections
-    Forum.remove({}, function(err){
+    Forum.deleteMany({}, function(err){
          if(err){
              console.log(err);
          }
          console.log("removed forums!");
 
          //Remove all comments
-         Comment.remove({}, function(err) {
+         Comment.deleteMany({}, function(err) {
              if(err){
                  console.log(err);
              }
@@ -56,7 +68,10 @@ function seedDB(){
                          Comment.create(
                              {
                                  text: "generic social media comment",
-                                 author: "Homer Simpson"
+                                 author:{
+                                     id: "588c2e092403d111454fff76",
+                                     username: "Jane"
+                                 }
                              }, function(err, comment){
                                  if(err){
                                      console.log(err);

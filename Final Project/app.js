@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var methodOverride = require("method-override");
+
 var User = require("./models/user");
 //requiring routes
 var commentRoutes = require("./routes/comments");
@@ -33,12 +35,15 @@ var seedDB = require("./seeds");
 
 
 mongoose.set("useUnifiedTopology", true);
+mongoose.set("useFindAndModify", false);
 mongoose.connect("mongodb://localhost:27017/appdb", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
 
-//seedDB();  //this will remove forums and comments, uncomment this to keep comments/forums in database
+app.use(methodOverride("_method")); //including method override using _method
+
+seedDB();  //this will remove forums and comments, uncomment this to keep comments/forums in database
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({

@@ -20,6 +20,12 @@
                <h4><a><%= forum.name %></a></h4>
                <p><%= forum.description %></p>
             </div>
+            <% if(currentUser && forum.author.id.equals(currentUser._id)){  %>
+              <a class ="btn btn-warning" href="/forums/<%= forum._id %>/edit">Edit</a>  
+              <form id="delete-form" action="/forums/<%= forum._id %>?_method=DELETE" method="POST">
+                   <button class="btn btn-danger">Delete</button>
+              </form>
+            <% } %>
          </div>
          <div class="well">
             <div class="text-right">

@@ -2,6 +2,7 @@
 var express = require("express");
 var router = express.Router();
 var Forum = require("../models/forum");
+//var Comment = require("../models/comment");
 
 //INDEX -- DISPLAY ALL FORUMS
 router.get("/", function (req, res) {
@@ -61,12 +62,69 @@ router.get("/:id", function (req, res) {
     });
 });
 
+//EDIT FORUM ROUTE
+router.get("/:id/edit",checkForumOwnership, function (req, res) {  //if middleware passes, then the rest of the function is executed
+        Forum.findById(req.params.id, function(err, foundForum){  //used to get the specific forum id variable for the edit.ejs page
+                    res.render("forums/edit.ejs", {forum: foundForum});
+        });
+});
+
+//UPDATE FORUM ROUTE
+router.put("/:id",checkForumOwnership, function (req, res) {
+//find and update the correct forum
+Forum.findByIdAndUpdate(req.params.id, req.body.forum, function(err, updatedForum){
+    if(err){
+        res.redirect("/forums");
+    } else {
+        //then redirect to the showpage
+        res.redirect("/forums/" + req.params.id);
+    }
+});
+});
+
+//DELETE FORUM ROUTE
+router.delete("/:id",checkForumOwnership, function (req, res) {
+  Forum.findByIdAndRemove(req.params.id, function(err){
+      if(err){
+          res.redirect("/forums");
+      } else {
+          res.redirect("/forums");
+      }
+  });
+});
+
+
+
+
+
+
+
 function isLoggedIn(req, res, next){  //this is acting as a middleware to check is users are logged in
     if(req.isAuthenticated()){ //if the user is logged in, return the next (continue as usual)
         return next();
     }
     res.redirect("/login");  //if the user is not logged in, redirect to login
     }  
+
+
+function checkForumOwnership(req, res, next) {
+    if(req.isAuthenticated()){ 
+        Forum.findById(req.params.id, function(err, foundForum){  //used to get the specific forum id variable for the edit.ejs page
+            if(err){
+                res.redirect("back");
+            } else{
+                     //does user own the forum post?
+                if(foundForum.author.id.equals(req.user._id)){
+                    next();
+                } else{
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+       res.redirect("back");
+    }
+}
     
 
 module.exports = router;
