@@ -90,6 +90,6 @@ body {
   .overflow-hidden { overflow: hidden; }
   
 
-  #delete-form {
+  .delete-form {
     display: inline;
   }

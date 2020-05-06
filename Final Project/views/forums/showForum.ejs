@@ -22,7 +22,7 @@
             </div>
             <% if(currentUser && forum.author.id.equals(currentUser._id)){  %>
               <a class ="btn btn-warning" href="/forums/<%= forum._id %>/edit">Edit</a>  
-              <form id="delete-form" action="/forums/<%= forum._id %>?_method=DELETE" method="POST">
+              <form class="delete-form" action="/forums/<%= forum._id %>?_method=DELETE" method="POST">
                    <button class="btn btn-danger">Delete</button>
               </form>
             <% } %>
@@ -40,6 +40,12 @@
                      <p>
                         <%= comment.text %>
                      </p>
+                     <% if(currentUser && comment.author.id.equals(currentUser._id)){  %>
+                   <a class="btn btn-sm btn-warning" href="/forums/<%= forum._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                   <form class="delete-form" action="/forums/<%= forum._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                     <input type="submit" class="btn btn-sm btn-danger" value="Delete">
+                   </form> <!-- has to be a form because it cant be a get req, it has to be a post request -->
+                    <% } %>
                   </div>
                </div>
                <hr>
