@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router({ mergeParams: true });
 var Forum = require("../models/forum");
 var Comment = require("../models/comment");
-
+var middleware = require("../middleware"); //index.js is automatically detected because index is special
 
 //==========================
 //COMMENTS ROUTES
@@ -10,7 +10,7 @@ var Comment = require("../models/comment");
 
 // Comments new
 
-router.get("/new", isLoggedIn, function (req, res) {
+router.get("/new", middleware.isLoggedIn, function (req, res) {
     //find forum by id
     Forum.findById(req.params.id, function (err, forum) {
         if (err) {
@@ -24,7 +24,7 @@ router.get("/new", isLoggedIn, function (req, res) {
 })
 
 //handle comments new form
-router.post("/", isLoggedIn, function (req, res) {
+router.post("/", middleware.isLoggedIn, function (req, res) {
     //lookup forum using ID
     Forum.findById(req.params.id, function (err, forum) {
 
@@ -59,7 +59,7 @@ router.post("/", isLoggedIn, function (req, res) {
 });
 
 //EDIT ROUTE FOR COMMENTS
-router.get("/:comment_id/edit",checkCommentOwnership, function (req, res) {
+router.get("/:comment_id/edit",middleware.checkCommentOwnership, function (req, res) {
     Comment.findById(req.params.comment_id, function (err, foundComment) {
         if (err) {
             res.redirect("back");
@@ -70,7 +70,7 @@ router.get("/:comment_id/edit",checkCommentOwnership, function (req, res) {
 });
 
 //UPDATE ROUTE FOR COMMENTS
-router.put("/:comment_id",checkCommentOwnership, function (req, res) {
+router.put("/:comment_id",middleware.checkCommentOwnership, function (req, res) {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function (err, updatedComment) {
         if (err) {
             res.redirect("back");
@@ -82,7 +82,7 @@ router.put("/:comment_id",checkCommentOwnership, function (req, res) {
 
 //DELETE ROUTE FOR COMMENTS
 
-router.delete("/:comment_id",checkCommentOwnership, function (req, res) {
+router.delete("/:comment_id",middleware.checkCommentOwnership, function (req, res) {
     //find by id and remove
     Comment.findByIdAndRemove(req.params.comment_id, function (err) {
         if (err) {
@@ -96,33 +96,6 @@ router.delete("/:comment_id",checkCommentOwnership, function (req, res) {
 
 
 
-//==========================
-function isLoggedIn(req, res, next) {  //this is acting as a middleware to check is users are logged in
-    if (req.isAuthenticated()) { //if the user is logged in, return the next (continue as usual)
-        return next();
-    }
-    res.redirect("/login");  //if the user is not logged in, redirect to login
-};
-
-function checkCommentOwnership(req, res, next) {
-    if(req.isAuthenticated()){ //is any user logged in
-        Comment.findById(req.params.comment_id, function(err, foundComment){  //used to get the specific forum id variable for the edit.ejs page
-            if(err){
-                res.redirect("back");
-            } else{
-                     //does user own the comment post?
-                if(foundComment.author.id.equals(req.user._id)){ //cant do === because its a mongoose id, so we gotta use .equals
-                    next();
-                } else{
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-       res.redirect("back"); //if not logged in then redirect them back
-    }
-}
-    
 
 
 module.exports = router;

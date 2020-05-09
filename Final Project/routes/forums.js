@@ -3,6 +3,7 @@ var express = require("express");
 var router = express.Router();
 var Forum = require("../models/forum");
 //var Comment = require("../models/comment");
+var middleware = require("../middleware"); //index.js is automatically detected because index is special 
 
 //INDEX -- DISPLAY ALL FORUMS
 router.get("/", function (req, res) {
@@ -18,13 +19,13 @@ router.get("/", function (req, res) {
 })
 
 //NEW -- DISPLAY FORM TO MAKE NEW FORUM
-router.get("/new",isLoggedIn, function (req, res) {
+router.get("/new",middleware.isLoggedIn, function (req, res) {
     res.render("forums/newForum.ejs");
 });
 
 
 //CREATE- GET DATA FROM FORM, ADD TO DATABASE, REDIRECT
-router.post("/",isLoggedIn, function (req, res) {
+router.post("/",middleware.isLoggedIn, function (req, res) {
     //get data from form and add to forum array
     //redirect to refresh forums
     var name = req.body.name;
@@ -63,14 +64,14 @@ router.get("/:id", function (req, res) {
 });
 
 //EDIT FORUM ROUTE
-router.get("/:id/edit",checkForumOwnership, function (req, res) {  //if middleware passes, then the rest of the function is executed
+router.get("/:id/edit",middleware.checkForumOwnership, function (req, res) {  //if middleware passes, then the rest of the function is executed
         Forum.findById(req.params.id, function(err, foundForum){  //used to get the specific forum id variable for the edit.ejs page
                     res.render("forums/edit.ejs", {forum: foundForum});
         });
 });
 
 //UPDATE FORUM ROUTE
-router.put("/:id",checkForumOwnership, function (req, res) {
+router.put("/:id",middleware.checkForumOwnership, function (req, res) {
 //find and update the correct forum
 Forum.findByIdAndUpdate(req.params.id, req.body.forum, function(err, updatedForum){
     if(err){
@@ -83,7 +84,7 @@ Forum.findByIdAndUpdate(req.params.id, req.body.forum, function(err, updatedForu
 });
 
 //DELETE FORUM ROUTE
-router.delete("/:id",checkForumOwnership, function (req, res) {
+router.delete("/:id",middleware.checkForumOwnership, function (req, res) {
   Forum.findByIdAndRemove(req.params.id, function(err){
       if(err){
           res.redirect("/forums");
@@ -98,33 +99,6 @@ router.delete("/:id",checkForumOwnership, function (req, res) {
 
 
 
-
-function isLoggedIn(req, res, next){  //this is acting as a middleware to check is users are logged in
-    if(req.isAuthenticated()){ //if the user is logged in, return the next (continue as usual)
-        return next();
-    }
-    res.redirect("/login");  //if the user is not logged in, redirect to login
-    }  
-
-
-function checkForumOwnership(req, res, next) {
-    if(req.isAuthenticated()){ 
-        Forum.findById(req.params.id, function(err, foundForum){  //used to get the specific forum id variable for the edit.ejs page
-            if(err){
-                res.redirect("back");
-            } else{
-                     //does user own the forum post?
-                if(foundForum.author.id.equals(req.user._id)){
-                    next();
-                } else{
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-       res.redirect("back");
-    }
-}
     
 
 module.exports = router;
