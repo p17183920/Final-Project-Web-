@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var flash = require("connect-flash");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
@@ -43,6 +44,8 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(methodOverride("_method")); //including method override using _method
 
+app.use(flash());
+
 //seedDB();  //this will remove forums and comments, uncomment this to keep comments/forums in database
 //COMMENT OUT SEEDDB, if there is an image null error
 
@@ -61,8 +64,12 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){ //middleware to pass req.user to every template
 res.locals.currentUser = req.user;
+res.locals.error = req.flash("error");  // passing the error and success variable to all routes for flash messages
+res.locals.success = req.flash("success");
 next();  //need the next otherwise everything will stop, need next to say "carry on with the rest"
 });
+
+
 
 
 app.get("/home", function (req, res) {

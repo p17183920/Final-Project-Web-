@@ -22,11 +22,12 @@ router.post("/register", function (req, res) {
     var newUser = new User({ username: req.body.username });
     User.register(newUser, req.body.password, function (err, user) {
         if (err) {
-            console.log(err);
-            res.render("register.ejs")
+            req.flash("error", err.message);
+            return res.redirect("/register");
         }
         passport.authenticate("local")(req, res, function () {
-            res.redirect("/forums");
+            req.flash("success", "Welcome to Student.IO " + user.username);
+            res.redirect("/home");
         });
     });
 });
@@ -49,17 +50,9 @@ router.post("/login", passport.authenticate("local",  //check notes "login post 
 //logout route
 router.get("/logout", function(req, res){
 req.logout(); //comes from package
-res.redirect("/");
+req.flash("success", "Logged you out!");
+res.redirect("/home");
 });
-
-function isLoggedIn(req, res, next){  //this is acting as a middleware to check is users are logged in
-if(req.isAuthenticated()){ //if the user is logged in, return the next (continue as usual)
-    return next();
-}
-res.redirect("/login");  //if the user is not logged in, redirect to login
-}  
-
-
 
 
 //==========================

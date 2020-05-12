@@ -40,6 +40,7 @@ router.post("/",middleware.isLoggedIn, function (req, res) {
     Forum.create(newForum, function (err, newlyCreatedForum) {
         if (err) { console.log("error creating new forum"); }
         else { 
+            req.flash("success", "Successfully added a forum!");
             res.redirect("/forums");
          }
     });
@@ -89,6 +90,7 @@ router.delete("/:id",middleware.checkForumOwnership, function (req, res) {
       if(err){
           res.redirect("/forums");
       } else {
+        req.flash("success", "Forum deleted!");
           res.redirect("/forums");
       }
   });

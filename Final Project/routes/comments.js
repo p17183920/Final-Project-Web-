@@ -36,6 +36,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
             //create new comment
             Comment.create(req.body.comment, function (err, comment) {
                 if (err) {
+                    req.flash("error", "Something went wrong with creating a comment!");
                     console.log(err);
                 }
                 else {
@@ -47,6 +48,7 @@ router.post("/", middleware.isLoggedIn, function (req, res) {
                     //connect new comment to forum
                     forum.comments.push(comment);
                     forum.save();
+                    req.flash("success", "Successfully added a comment!");
                     //redirect back to show route of forum
                     res.redirect("/forums/" + forum._id);  //redirect to specific forum page the comment was made for
 
@@ -88,6 +90,7 @@ router.delete("/:comment_id",middleware.checkCommentOwnership, function (req, re
         if (err) {
             res.redirect("back");
         } else {
+            req.flash("success", "Comment deleted!");
             res.redirect("/forums/" + req.params.id);
         }
     });
