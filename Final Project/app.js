@@ -71,7 +71,7 @@ next();  //need the next otherwise everything will stop, need next to say "carry
 
 
 
-
+//Second landing HOMEPAGE
 app.get("/home", function (req, res) {
   // console.log("landing page triggered");
    res.render("landing.ejs");
@@ -80,7 +80,8 @@ app.get("/home", function (req, res) {
 //root route // LANDING PAGE
 app.get("/", function (req, res) {
    // console.log("landing page triggered");
-    res.redirect("/home");
+    //res.redirect("/home");
+    res.render("firstLanding.ejs");
 })
 
 
@@ -97,12 +98,10 @@ app.use("/forums/:id/comments", commentRoutes);   //comment routes in seperate f
 //app.use(livechatRoutes);
 
 
-//live chat routes
+//TOOL ROUTES
 app.get("/livechat", function (req, res) {
   res.render("livechat.ejs");
 });
-
-
 
 app.get("/calculator", function (req, res) {
  
@@ -114,6 +113,10 @@ app.get("/todo", function (req, res) {
   res.render("todolist.ejs");
 });
 
+app.get("/timer", function (req, res) {
+ 
+  res.render("timer.ejs");
+});
 
 
 // Live chat stuff
