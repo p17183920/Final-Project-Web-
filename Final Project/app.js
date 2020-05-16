@@ -118,6 +118,11 @@ app.get("/timer", function (req, res) {
   res.render("timer.ejs");
 });
 
+app.get("/weather", function (req, res) {
+ 
+  res.render("weather.ejs");
+});
+
 
 // Live chat stuff
 
