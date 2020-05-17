@@ -15,7 +15,7 @@
             <img class="img-responsive" src="<%= forum.image %>">
             <div class="caption-full">
                <h7 class="float-right">
-                <em> Created by <%= forum.author.username %> </em>
+                <em> Created by:<a href="/users/<%= forum.author.id %>"> <%= forum.author.username %> </a> </em>
                </h7>
                <h4><a><%= forum.name %></a></h4>
                <p><%= forum.description %></p>

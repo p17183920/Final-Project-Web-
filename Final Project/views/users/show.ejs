@@ -1,0 +1,36 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+<div class="row">
+    <div class="col-4">
+        <h1><%= user.firstName + " " + user.lastName %> </h1>
+        <div class="img-thumbnail">
+            <img src="<%= user.avatar %>" alt="user profile picture">
+            <div class="figure-caption"><a href="mailto:<%= user.email %>"> <%= user.email %> </a></div>
+        </div>
+        Conveying or northward offending admitting perfectly my. Colonel gravity get thought fat smiling add but.
+    Wonder twenty hunted and put income set desire expect. Am cottage calling my is mistake cousins talking up.
+    Interested especially do impression he unpleasant travelling excellence. All few our knew time done draw ask.
+    </div>
+    
+    <div class="col-8">
+    <h3><%= user.username %>'s forums</h3>
+        <ul>
+        <% forums.forEach(function(forum) { %>
+          <li><a href="/forums/<%=forum.id %>"> <%= forum.name %> </a></li>
+
+        <% }); %>
+    </ul>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<%- include("../partials/footer") %>

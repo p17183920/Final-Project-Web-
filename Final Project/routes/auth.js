@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Forum = require("../models/forum");
 
 
 
@@ -19,8 +20,15 @@ router.get("/register", function (req, res) {
 
 //handle sign up logic
 router.post("/register", function (req, res) {
-    var newUser = new User({ username: req.body.username });
-    User.register(newUser, req.body.password, function (err, user) {
+    //var newUser = new User({ username: req.body.username});
+    var newUser = new User({  //pass in all user form data
+        username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        avatar: req.body.avatar
+    });
+    User.register(newUser, req.body.password, function (err, user) {  //pass in the password from the form seperately
         if (err) {
             req.flash("error", err.message);
             return res.redirect("/register");
@@ -48,11 +56,35 @@ router.post("/login", passport.authenticate("local",  //check notes "login post 
 
 
 //logout route
-router.get("/logout", function(req, res){
-req.logout(); //comes from package
-req.flash("success", "Logged you out!");
-res.redirect("/home");
+router.get("/logout", function (req, res) {
+    req.logout(); //comes from package
+    req.flash("success", "Logged you out!");
+    res.redirect("/home");
 });
+
+
+
+//profile page route
+router.get("/users/:id", function (req, res) {
+    //find user
+    User.findById(req.params.id, function (err, foundUser) {
+        if (err) {
+            req.flash("error", "Cannot find user");
+            return res.redirect("/");
+        }
+        Forum.find().where("author.id").equals(foundUser._id).exec(function (err, forums) {
+            if (err) {
+                req.flash("error", "Something went wrong!");
+               return res.redirect("/");
+            }
+            
+            //render their info
+            res.render("users/show.ejs", { user: foundUser, forums: forums});
+        })
+
+    });
+});
+
 
 
 //==========================

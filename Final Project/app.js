@@ -85,13 +85,6 @@ app.get("/", function (req, res) {
 })
 
 
-//profile page route
-//need to get userID specific routes probably id/profile
-app.get("/profile", function (req, res) {
-    res.render("landing.ejs");
-})
-
-
 app.use(authRoutes);   //auth routes in seperate file
 app.use("/forums" ,forumRoutes);     //forum routes in seperate file
 app.use("/forums/:id/comments", commentRoutes);   //comment routes in seperate file
