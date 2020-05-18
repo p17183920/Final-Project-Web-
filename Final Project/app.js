@@ -47,7 +47,7 @@ app.use(methodOverride("_method")); //including method override using _method
 app.use(flash());
 
 //seedDB();  //this will remove forums and comments, uncomment this to keep comments/forums in database
-//COMMENT OUT SEEDDB, if there is an image null error
+
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
